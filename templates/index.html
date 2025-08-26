@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>物料损耗统计</title>
+   <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+    <style>
+        body {
+            background: #f9f9f9;
+        }
+        .container-flex {ty
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .table-container {
+            flex: 1;
+            max-width: 50%;
+            overflow-x: auto;
+        }
+        .chart-container {
+            flex: 1;
+            max-width: 50%;
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 5px;
+            background: #fff;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="p-4">
+    <h2 class="mb-4">📊 物料损耗统计</h2>
+
+    <form method="post" class="mb-4">
+{#        <label>开始日期: <input type="date" name="start" required></label>#}
+{#        <label>结束日期: <input type="date" name="end" required></label>#}
+
+       <label>开始日期:<input type="date" name="start" value="{{ start_date }}" required></label>
+       <label>结束日期:<input type="date" name="end" value="{{ end_date }}" required></label>
+
+        <button type="submit" class="btn btn-primary">查询</button>
+    </form>
+
+    {% if result %}
+    <div class="container-flex">
+        <div class="table-container">
+            <h4>统计表格</h4>
+            {{ result|safe }}
+        </div>
+        <div class="chart-container">
+            <h4>统计图表</h4>
+            <img src="{{chart_file}}?v={{ cache_bust }}" alt="损耗图表">
+        </div>
+    </div>
+    {% endif %}
+</body>
+</html>
